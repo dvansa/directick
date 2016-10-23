@@ -1,6 +1,6 @@
 /*
 *
-* General utility functions.
+* Common definitions.
 *
 *
 * Copyright (C) 2016 Daniel van Sabben Alsina
@@ -20,21 +20,19 @@
 *
 *
 */
-#ifndef _DIRECTICK_GENERAL_UTILS
-#define _DIRECTICK_GENERAL_UTILS
+#ifndef _DIRECTICK_COMMON
+#define _DIRECTICK_COMMON
 
-#include <directick/common/common.hpp>
+#define CSTR_PROGRAM_NAME "Directick"
 
-#include <string>
-#include <chrono>
+#if defined(_WIN32) || defined(_WIN64)
+#define OS_WINDOWS
+#else
+#error Platform not supported
+#endif
 
-//Get current time in total milliseconds
-long long GetCurrentMilliseconds();
-
-//String to upercase
-std::string StrToUppercase(const std::string & str);
-
-//Encodes string to URL
-std::string EncodeToURL(const std::string & str);
+//Windows registry values for startu running
+#define CSTR_REGISTRY_KEY "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+#define CSTR_REGISTRY_SUBKEY CSTR_PROGRAM_NAME
 
 #endif

@@ -23,15 +23,23 @@
 #ifndef _DIRECTICK_OS_UTILS
 #define _DIRECTICK_OS_UTILS
 
+#include <directick/common/common.hpp>
+
 #include <Windows.h>
 #include <string>
 #include <iostream>
+
+#define REGISTRY_VALUE_LEN 512
+#define MAX_PATH_LEN 1024
 
 namespace os
 {
 
 //	Windows
 ///////////////////////////////
+
+//Execute
+void SysExecute(const char * command);
 
 //Sleep
 void ProgramSleep(long long milliseconds);
@@ -45,6 +53,14 @@ void GetDesktopDimensions(int & width, int & height);
 //Get cursor position in desktop
 void GetCursorPosition(int & x, int & y);
 
+//Register check if subkey entry exists
+bool RegistrySubkeyExists(const std::string & key, const std::string & subkey);
+
+//Register add subkey entry
+bool RegistryAddSubkey(const std::string & key, const std::string & subkey, const std::string & value);
+
+//Register remove subkey entry
+bool RegisterRemoveSubkey(const std::string & key, const std::string & subkey);
 
 }//namespace os
 

@@ -23,6 +23,7 @@
 #ifndef _DIRECTICK_ACTIONS
 #define _DIRECTICK_ACTIONS
 
+#include <directick/common/common.hpp>
 #include <directick/common/OSUtils.hpp>
 #include <directick/UserInput.hpp>
 

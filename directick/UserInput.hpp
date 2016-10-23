@@ -25,6 +25,7 @@
 #ifndef _DIRECTICK_USER_INPUT
 #define _DIRECTICK_USER_INPUT
 
+#include <directick/common/common.hpp>
 #include <directick/common/OSUtils.hpp>
 #include <directick/common/GeneralUtils.hpp>
 

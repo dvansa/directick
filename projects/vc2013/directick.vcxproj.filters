@@ -50,5 +50,8 @@
     <ClInclude Include="..\..\directick\UserInput.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\directick\common\common.hpp">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

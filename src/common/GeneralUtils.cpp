@@ -20,12 +20,23 @@
 *
 *
 */
+#include <directick/common/common.hpp>
 #include <directick/common/GeneralUtils.hpp>
 
 long long GetCurrentMilliseconds()
 {
 	std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 	return ms.count();
+}
+
+std::string StrToUppercase(const std::string & str)
+{
+	std::string upper_str;
+	for (char c : str)
+	{
+		upper_str.push_back(toupper(c));
+	}
+	return upper_str;
 }
 
 std::string EncodeToURL(const std::string & str)

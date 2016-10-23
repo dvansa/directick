@@ -24,6 +24,33 @@
 
 namespace os
 {
+	void SysExecute(const char * command)
+	{
+		STARTUPINFO si;
+		PROCESS_INFORMATION pi;
+
+		ZeroMemory(&si, sizeof(si));
+		si.cb = sizeof(si);
+		ZeroMemory(&pi, sizeof(pi));
+
+		LPCSTR cmd = "C:\\Windows\\System32\\cmd.exe";
+		std::string args = std::string("cmd /C ") + std::string(command);
+		LPSTR exec = new char[args.length() + 1];
+		strcpy_s(exec,args.length()+1, args.c_str());
+
+		if (CreateProcessA(cmd, exec, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi))
+		{
+			WaitForSingleObject(pi.hProcess,INFINITE);
+			CloseHandle(pi.hProcess);
+			CloseHandle(pi.hThread);
+		}
+
+		if (exec)
+		{
+			delete exec;
+		}
+	}
+
 	void ProgramSleep(long long milliseconds)
 	{
 		Sleep((DWORD)milliseconds);
@@ -85,6 +112,49 @@ namespace os
 
 		x = cursor.x;
 		y = cursor.y;
+	}
+
+	bool RegistrySubkeyExists(const std::string & key, const std::string & subkey)
+	{
+		if (RegGetValueA(HKEY_CURRENT_USER, key.c_str(), subkey.c_str(), RRF_RT_ANY, NULL,NULL,NULL) != ERROR_SUCCESS)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	bool RegistryAddSubkey(const std::string & key, const std::string & subkey, const std::string & value)
+	{
+		HKEY reg_value;
+		if (RegOpenKey(HKEY_CURRENT_USER, key.c_str(), &reg_value) != ERROR_SUCCESS)
+		{
+			return false;
+		}
+
+		if (RegSetValueEx(reg_value, TEXT(subkey.c_str()), 0, REG_SZ, (LPBYTE)value.c_str(), (DWORD) (value.length()+1) ) != ERROR_SUCCESS)
+		{
+			RegCloseKey(reg_value);
+			return false;
+		}
+		RegCloseKey(reg_value);
+		return true;
+	}
+
+	bool RegisterRemoveSubkey(const std::string & key, const std::string & subkey)
+	{
+		HKEY reg_value;
+		if (RegOpenKey(HKEY_CURRENT_USER, TEXT(key.c_str()), &reg_value) != ERROR_SUCCESS)
+		{
+			return false;
+		}
+
+		if (RegDeleteValue(reg_value, TEXT(subkey.c_str())) != ERROR_SUCCESS)
+		{
+			RegCloseKey(reg_value);
+			return false;
+		}
+		RegCloseKey(reg_value);
+		return true;
 	}
 
 }//namespace os

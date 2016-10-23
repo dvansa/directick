@@ -45,7 +45,7 @@ void SearchGoogleClipboardContent()
 	std::string cmd_query = std::string("start www.google.com/?q=") + http_str;
 
 	//Exec
-	std::system(cmd_query.c_str());
+	os::SysExecute(cmd_query.c_str());
 }
 
 }
